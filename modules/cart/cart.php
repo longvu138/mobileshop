@@ -6,12 +6,13 @@ if (isset($_SESSION['cart'])) {
             $_SESSION['cart'][$prd_id] = $qty;
         }
     }
+    //tạo mảng rỗng chứa các id của giỏ hàng
     $arr_id = array();
     foreach ($_SESSION['cart'] as $prd_id => $qty) {
-        $arr_id[] = $prd_id;
+        $arr_id[] = $prd_id; // push id vừa duyệt vào mảng
     }
-    $list_id = implode(', ', $arr_id);
-    $sql = "SELECT * FROM product WHERE prd_id IN($list_id)";
+    $list_id = implode(', ', $arr_id); // tạo dãy cách nhau dấu ,  vd: 1,2,3
+    $sql = "SELECT * FROM product WHERE prd_id IN($list_id)"; // sql where in
     $query = mysqli_query($conn, $sql);
 
 ?>
@@ -35,7 +36,7 @@ if (isset($_SESSION['cart'])) {
                         <img src="./admin/img/<?php echo $prd['prd_image']; ?>">
                         <h4><?php echo $prd['prd_name']; ?></h4>
                     </div>
-
+                      
                     <div class="cart-quantity col-lg-2 col-md-2 col-sm-12">
                         <input type="number" id="quantity" class="form-control form-blue quantity" name="qty[<?php echo $prd['prd_id']; ?>]" value="<?php echo $_SESSION['cart'][$prd['prd_id']]; ?>" min="1">
                     </div>
